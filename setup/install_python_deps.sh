@@ -50,7 +50,7 @@ fi
 
 # --- 2. uv sync で依存パッケージを一括インストール ----------------------------
 echo "[2/2] pyproject.toml から依存パッケージをインストールしています..."
-cd "${REPO_ROOT}"
+cd "${REPO_ROOT}/plasma-bench"
 uv sync
 
 echo ""
