@@ -33,4 +33,4 @@ export PATH="${UV_INSTALL_DIR}:${PATH}"
 # 仮想環境はリポジトリ直下の .venv（uv のデフォルト）
 # pyproject.toml と uv.lock でバージョンを固定・再現する
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-export PLASMA_BENCH_VENV="${REPO_ROOT}/.venv"
+export PLASMA_BENCH_VENV="${REPO_ROOT}/plasma-bench/.venv"
