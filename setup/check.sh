@@ -39,26 +39,16 @@ warn() {
 }
 
 echo "======================================================"
-echo " plasma-bench セットアップ確認"
+echo " plasma-workspace ネイティブ環境確認"
 echo "======================================================"
 echo ""
-echo "--- 基本ツール ---"
+echo "--- 基本ツール（ビルドに必要）---"
 check "curl"      "command -v curl"
 check "wget"      "command -v wget"
 check "cmake"     "command -v cmake"
 check "gfortran"  "command -v gfortran"
 check "git"       "command -v git"
-
-echo ""
-echo "--- Python / uv ---"
-check "uv"                    "command -v uv"
-check "仮想環境 (.venv)"      "test -f '${PLASMA_BENCH_VENV}/bin/python'"
-check "Python バージョン確認"  "${PLASMA_BENCH_VENV}/bin/python --version"
-check "optuna"                "${PLASMA_BENCH_VENV}/bin/python -c 'import optuna'"
-check "plotly"                "${PLASMA_BENCH_VENV}/bin/python -c 'import plotly'"
-check "kaleido"               "${PLASMA_BENCH_VENV}/bin/python -c 'import kaleido'"
-check "pandas"                "${PLASMA_BENCH_VENV}/bin/python -c 'import pandas'"
-check "matplotlib"            "${PLASMA_BENCH_VENV}/bin/python -c 'import matplotlib'"
+check "python3"   "command -v python3"   # PLASMA のビルドに必要
 
 echo ""
 echo "--- OpenBLAS ---"
@@ -85,3 +75,6 @@ else
     echo " README.md を参照して手動でセットアップしてください。"
 fi
 echo "======================================================"
+echo ""
+echo " NOTE: Python の計測・チューニング環境（optuna 等）は別リポジトリ"
+echo "       plasma-perf 側で管理する（pip install -e \".[tuning,viz]\"）。"
