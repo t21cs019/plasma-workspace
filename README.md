@@ -57,6 +57,23 @@ scripts/run_campaign.sh -- python -m plasma_perf bench ssrfb --trials 5
 
 詳細は plasma-perf の README を参照。
 
+## SSRFB カーネル計測ツール（NoFlush）
+
+`tune_ssrfb/` に NoFlush のソースを**同梱**している（外部リポジトリの clone はしない）。
+`install_noflush.sh` がここからビルドする。**MAT_SIZE（行列サイズ）と N_IT（反復回数）は
+実行時引数で指定できる**（`plasma-perf` の bench ラッパーからも指定可能）:
+
+```
+NoFlush [NB] [IB] [MAT_SIZE=4096] [N_IT=50]
+```
+
+BLAS バックエンドは既定 OpenBLAS（このワークスペースの PLASMA ビルドに合わせる）。
+MKL 版 PLASMA を使う場合は同梱 Makefile（MKL 前提）で:
+
+```bash
+NOFLUSH_USE_MKL=1 bash setup/install_noflush.sh
+```
+
 ## 含まれるもの
 
 ```
@@ -65,6 +82,10 @@ setup/
   install.sh             OpenBLAS → PLASMA → NoFlush を一括ビルド
   install_openblas.sh    OpenBLAS をソースからビルド
   install_plasma.sh      PLASMA を clone してビルド（LD_LIBRARY_PATH も ~/.bashrc に追記）
-  install_noflush.sh     Tune_SSRFB の NoFlush をビルド
+  install_noflush.sh     同梱 tune_ssrfb/ から NoFlush をビルド（OpenBLAS 既定 / MKL 切替可）
   check.sh               ビルド結果の確認
+tune_ssrfb/
+  NoFlush.cpp            DSSRFB/DTSMQR カーネル単体計測（MAT_SIZE/N_IT 実行時指定可）
+  MultCallFlushLRU.cpp   FlushLRU 版（キャッシュフラッシュ込み。nb 内部スイープ）
+  Makefile               MKL 前提のビルド定義
 ```

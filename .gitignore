@@ -1,0 +1,5 @@
+# tune_ssrfb をその場でビルドした場合の生成物
+tune_ssrfb/*.o
+tune_ssrfb/NoFlush
+tune_ssrfb/FlushLRU
+.DS_Store
