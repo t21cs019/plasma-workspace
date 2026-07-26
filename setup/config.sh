@@ -28,6 +28,6 @@ export PLASMA_GIT_URL="https://github.com/icl-utk-edu/plasma.git"
 # export SCP_DEST="ryo@desktop:~/tileQR_dashboard/inbox/manual"
 
 # NOTE: Python 環境（optuna 等）は計測リポジトリ plasma-perf 側で管理する
-#       （`pip install -e ".[tuning,viz]"`）。このワークスペースはネイティブ
+#       （uv: `bash scripts/setup_python.sh`）。このワークスペースはネイティブ
 #       ライブラリのビルドのみを担当する。PLASMA のビルドには system の python3
 #       が必要（install_plasma.sh 内で存在を確認する）。

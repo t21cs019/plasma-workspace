@@ -77,4 +77,4 @@ fi
 echo "======================================================"
 echo ""
 echo " NOTE: Python の計測・チューニング環境（optuna 等）は別リポジトリ"
-echo "       plasma-perf 側で管理する（pip install -e \".[tuning,viz]\"）。"
+echo "       plasma-perf 側で管理する（uv: bash scripts/setup_python.sh）。"

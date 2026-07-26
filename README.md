@@ -47,8 +47,8 @@ git clone https://github.com/t21cs019/plasma-perf.git
 cd plasma-perf
 
 # 計測だけなら追加インストール不要（標準ライブラリで動く）
-# チューニング/可視化を使う場合のみ:
-python3 -m pip install -e ".[tuning,viz]"
+# チューニング/可視化を使う場合のみ（uv）:
+bash scripts/setup_python.sh
 
 # 計測（tmux ラッパー経由。config.sh は自動で読まれる）
 scripts/run_campaign.sh -- python -m plasma_perf bench tileqr --size 4096 --trials 5

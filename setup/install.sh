@@ -49,6 +49,6 @@ echo " 計測・チューニング（別リポジトリ plasma-perf を隣に cl
 echo "   git clone https://github.com/t21cs019/plasma-perf.git"
 echo "   cd plasma-perf"
 echo "   # 計測だけなら追加インストール不要（標準ライブラリで動く）"
-echo "   # チューニング/可視化を使う場合: python3 -m pip install -e \".[tuning,viz]\""
+echo "   # チューニング/可視化を使う場合（uv）: bash scripts/setup_python.sh"
 echo "   scripts/run_campaign.sh -- python -m plasma_perf bench tileqr --trials 5"
 echo "======================================================"
