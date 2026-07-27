@@ -63,6 +63,8 @@ check "libplasma.so"     "test -f '${PLASMA_INSTALL}/lib/libplasma.so'"
 echo ""
 echo "--- NoFlush（Tune_SSRFB） ---"
 check "NoFlush 実行ファイル"  "test -f '${NOFLUSH_PATH}'"
+# 実際に起動できるか（共有ライブラリ解決の確認。rc=127 対策）
+check "NoFlush 起動テスト"    "'${NOFLUSH_PATH}' 64 16"
 
 echo ""
 echo "======================================================"

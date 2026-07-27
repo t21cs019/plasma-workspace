@@ -14,6 +14,12 @@ export PLASMA_INSTALL="${PLASMA_LIBS}/plasma"
 export PLASMA_TEST="${PLASMA_INSTALL}/bin/plasmatest"        # tileqr（フルQR）
 export NOFLUSH_PATH="${PLASMA_LIBS}/Tune_SSRFB/NoFlush"      # ssrfb（カーネル単体）
 
+# --- 実行時のライブラリ検索パス ----------------------------------------------
+# plasmatest / NoFlush が libplasma・libopenblas を実行時に見つけられるように。
+# DT_RUNPATH は「推移的な間接依存」（libplasma → libopenblas 等）には効かないため、
+# ここで明示する。lib / lib64 の両方を入れておく（存在しない側は無視される）。
+export LD_LIBRARY_PATH="${OPENBLAS_INSTALL}/lib:${OPENBLAS_INSTALL}/lib64:${PLASMA_INSTALL}/lib:${PLASMA_INSTALL}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+
 # --- ビルド設定 ---------------------------------------------------------------
 export NUM_MAKE_JOBS=$(nproc)   # 並列ビルド数（自動検出）
 

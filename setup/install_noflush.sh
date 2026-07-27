@@ -54,6 +54,9 @@ if [ "${NOFLUSH_USE_MKL}" = 1 ]; then
     make NoFlush
 else
     # OpenBLAS 版（このワークスペースの PLASMA ビルドに合わせる）
+    # --disable-new-dtags: DT_RUNPATH ではなく DT_RPATH を埋め込む。
+    # RPATH は推移的依存（libplasma → libopenblas）にも効くため、LD_LIBRARY_PATH
+    # 無しでも実行時にライブラリを解決できる。
     g++ -m64 -fopenmp -O3 \
         -I"${PLASMA_INSTALL}/include" \
         -I"${PLASMA_INSTALL}/include/plasma" \
@@ -62,6 +65,7 @@ else
         -L"${PLASMA_INSTALL}/lib" \
         -L"${OPENBLAS_INSTALL}/lib" \
         -lplasma -lplasma_core_blas -lopenblas \
+        -Wl,--disable-new-dtags \
         -Wl,-rpath,"${PLASMA_INSTALL}/lib" \
         -Wl,-rpath,"${OPENBLAS_INSTALL}/lib"
 fi
