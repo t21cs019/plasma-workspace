@@ -22,22 +22,31 @@ Python の計測・チューニングコードは別リポジトリ
 git clone https://github.com/t21cs019/plasma-workspace.git
 cd plasma-workspace
 
-# 2. 必要ならパス・バージョンを編集（既定は ~/Library, OpenBLAS 0.3.28）
+# 2.（家庭マシンのみ）ビルド依存を一括導入 + Tailscale。sudo を使う
+#    ※ 研究室・共有サーバでは実行しないこと
+bash setup/bootstrap_home.sh
+
+# 3. 必要ならパス・バージョンを編集（既定は ~/Library, OpenBLAS 0.3.28）
 vi setup/config.sh
 
-# 3. ネイティブ環境を一括ビルド（OpenBLAS → PLASMA → NoFlush）
+# 4. ネイティブ環境を一括ビルド（OpenBLAS → PLASMA → NoFlush）
 bash setup/install.sh
 
-# 4. 確認
+# 5. 確認
 bash setup/check.sh
 ```
 
 ビルド後、`plasmatest`（tileqr 用）と `NoFlush`（ssrfb 用）が `~/Library` 配下に
 入り、`setup/config.sh` が `PLASMA_TEST` / `NOFLUSH_PATH` として export する。
 
-> 共有サーバで sudo が使えない場合でも、すべて `~/Library` 配下にビルドするため
-> 追加の権限は不要。ただしビルドツール（gcc/gfortran/make/cmake/git/wget/python3）は
-> あらかじめ用意すること（`module load` 等）。`python3` は PLASMA のビルドに必要。
+> **家庭マシン（自分専用）** は手順2の `bootstrap_home.sh` で `build-essential` /
+> `gfortran` / `cmake` / `git` / `wget` / `curl` / `python3` 等と Tailscale を
+> sudo で一括導入できる。
+>
+> **研究室・共有サーバ**では `bootstrap_home.sh` を使わないこと（sudo 前提）。
+> すべて `~/Library` 配下にビルドするので追加権限は不要だが、ビルドツール
+> （gcc/gfortran/make/cmake/git/wget/python3）は各自 `module load` 等で用意する。
+> `python3` は PLASMA のビルドに必要。
 
 ## 計測・チューニング（plasma-perf を隣に clone）
 
@@ -78,6 +87,7 @@ NOFLUSH_USE_MKL=1 bash setup/install_noflush.sh
 
 ```
 setup/
+  bootstrap_home.sh      家庭マシン専用: apt 依存一括導入 + Tailscale（sudo 使用）
   config.sh              共通設定（インストール先・URL・PLASMA_TEST/NOFLUSH_PATH）
   install.sh             OpenBLAS → PLASMA → NoFlush を一括ビルド
   install_openblas.sh    OpenBLAS をソースからビルド
