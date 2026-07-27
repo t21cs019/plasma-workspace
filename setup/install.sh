@@ -24,6 +24,22 @@ echo " plasma-workspace ネイティブ環境ビルド開始"
 echo "======================================================"
 echo ""
 
+# --- 前提ツールの確認（不足なら早期に停止し、案内する）----------------------
+missing=()
+for cmd in gcc g++ make cmake gfortran git wget curl python3; do
+    command -v "${cmd}" &>/dev/null || missing+=("${cmd}")
+done
+if [ "${#missing[@]}" -gt 0 ]; then
+    echo "[ERROR] ビルドに必要なツールが不足しています: ${missing[*]}"
+    echo ""
+    echo "  家庭マシンなら次で一括導入できます（sudo 使用）:"
+    echo "      bash setup/bootstrap_home.sh"
+    echo "  もしくは手動で:"
+    echo "      sudo apt-get install -y build-essential gfortran cmake git wget curl python3"
+    echo "  （共有サーバでは module load 等で用意してください）"
+    exit 1
+fi
+
 # 1. OpenBLAS
 echo ">>> [1/3] OpenBLAS のインストール"
 bash "${SCRIPT_DIR}/install_openblas.sh"

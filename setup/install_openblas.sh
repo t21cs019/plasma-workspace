@@ -23,6 +23,16 @@ if [ -f "${OPENBLAS_INSTALL}/lib/libopenblas.so" ]; then
     exit 0
 fi
 
+# 必要なコマンドの確認（不足なら早期に停止）
+for cmd in make gcc gfortran wget tar; do
+    if ! command -v "${cmd}" &>/dev/null; then
+        echo "[ERROR] '${cmd}' が見つかりません。"
+        echo "        家庭マシンなら: bash setup/bootstrap_home.sh"
+        echo "        もしくは: sudo apt-get install -y build-essential gfortran wget"
+        exit 1
+    fi
+done
+
 # 作業ディレクトリの準備
 mkdir -p "${WORK_DIR}"
 cd "${WORK_DIR}"
